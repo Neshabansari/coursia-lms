@@ -1,0 +1,15 @@
+<svg width="400" height="200" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Blue circle background -->
+  <circle cx="100" cy="100" r="90" fill="#0061FF"/>
+  
+  <!-- Graduation cap inside circle -->
+  <path d="M60 90 L100 70 L140 90 L100 110 Z" fill="white"/> <!-- top of cap -->
+  <rect x="90" y="110" width="20" height="12" fill="white"/> <!-- base -->
+  <line x1="140" y1="90" x2="140" y2="115" stroke="white" stroke-width="4"/> <!-- tassel string -->
+  <circle cx="140" cy="115" r="4" fill="white"/> <!-- tassel circle -->
+  
+  <!-- Coursia text to the right of circle -->
+  <text x="210" y="115" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="black">
+    Coursia
+  </text>
+</svg>
