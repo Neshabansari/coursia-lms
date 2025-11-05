@@ -8,12 +8,13 @@ const userSchema = new mongoose.Schema(
         imageUrl: {type: String, required: true},
         enrolledCourses: [
             {
-                type: mongoose.Schema. Types.ObjectId,
+                type: mongoose.Schema.Types.ObjectId,
                 ref: 'Course'
             }
         ],
     }, {timestamps: true});
 
     const User = mongoose.model('User',userSchema);
+    
     
     export default User
