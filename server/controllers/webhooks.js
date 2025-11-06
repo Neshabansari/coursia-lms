@@ -62,8 +62,8 @@ export const stripeWebhooks = async(request, response)=>{
       let event;
 
       try {
-        // event = Stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
-        event = stripeInstance.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+        event = Stripe.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+        // event = stripeInstance.webhooks.constructEvent(request.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
 
       }
       catch (err) {
@@ -74,55 +74,55 @@ export const stripeWebhooks = async(request, response)=>{
       console.log("🔥 Stripe Webhook Triggered:", event.type);
       // Handle the event
       switch (event.type) {
-        // case 'payment_intent.succeeded':{
-        //   const paymentIntent = event.data.object;
+        case 'payment_intent.succeeded':{
+          const paymentIntent = event.data.object;
 
-        //   const paymentIntentId = paymentIntent.id;
+          const paymentIntentId = paymentIntent.id;
 
-        //   const session = await stripeInstance.checkout.sessions.list({
-        //     payment_intent: paymentIntentId
-        //   })
-        //   const {purchaseId } = session.data[0].metadata;
+          const session = await stripeInstance.checkout.sessions.list({
+            payment_intent: paymentIntentId
+          })
+          const {purchaseId } = session.data[0].metadata;
 
-        //   const purchaseData = await Purchase.findById(purchaseId)
-        //   const userData = await User.findById(purchaseData.userId)
-        //   const courseData = await Course.findById(purchaseData.courseId.toString())
+          const purchaseData = await Purchase.findById(purchaseId)
+          const userData = await User.findById(purchaseData.userId)
+          const courseData = await Course.findById(purchaseData.courseId.toString())
 
-        //   courseData.enrolledStudents.push(userData)
-        //   await courseData.save()
+          courseData.enrolledStudents.push(userData)
+          await courseData.save()
 
-        //   userData.enrolledCourses.push(courseData._id)
-        //   await userData.save()
+          userData.enrolledCourses.push(courseData._id)
+          await userData.save()
 
-        //   purchaseData.status = 'completed'
-        //   await purchaseData.save()
+          purchaseData.status = 'completed'
+          await purchaseData.save()
           
-        //   break;
-        // }
+          break;
+        }
 
         //extra
-        case 'checkout.session.completed': {
-           const session = event.data.object;
-           const { purchaseId } = session.metadata;
+        // case 'checkout.session.completed': {
+        //    const session = event.data.object;
+        //    const { purchaseId } = session.metadata;
            
-           const purchaseData = await Purchase.findById(purchaseId);
-           const userData = await User.findById(purchaseData.userId);
-           const courseData = await Course.findById(purchaseData.courseId);
+        //    const purchaseData = await Purchase.findById(purchaseId);
+        //    const userData = await User.findById(purchaseData.userId);
+        //    const courseData = await Course.findById(purchaseData.courseId);
            
-           // Enroll user
-           courseData.enrolledStudents.push(userData._id);
-           await courseData.save();
+        //    // Enroll user
+        //    courseData.enrolledStudents.push(userData._id);
+        //    await courseData.save();
            
-           userData.enrolledCourses.push(courseData._id);
-           await userData.save();
+        //    userData.enrolledCourses.push(courseData._id);
+        //    await userData.save();
            
-           // Mark payment as completed
-           purchaseData.status = 'completed';
-           await purchaseData.save();
+        //    // Mark payment as completed
+        //    purchaseData.status = 'completed';
+        //    await purchaseData.save();
            
-           console.log(`✅ Purchase ${purchaseId} marked as completed`);
-        break;
-        }
+        //    console.log(`✅ Purchase ${purchaseId} marked as completed`);
+        // break;
+        // }
         
 
 

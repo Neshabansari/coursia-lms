@@ -12,17 +12,16 @@ import userRouter from './routes/userRoutes.js';
 //Initializing Express
 const app = express()
 
-// ✅ Stripe webhook must come BEFORE any body parsers or Clerk middleware
-app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks)
-
-// Global middlewares
-app.use(cors())
-app.use(express.json()); //Extra. can safely parse normal routes
-app.use(clerkMiddleware()) // Authenticate all requests and attach user info to req.auth
-
 // Connect DB + Cloudinary
 await connectDB()
 await connectCloudinary()
+
+
+// Global middlewares
+app.use(cors())
+// app.use(express.json()); //Extra. can safely parse normal routes
+app.use(clerkMiddleware()) // Authenticate all requests and attach user info to req.auth
+
 
 //Routes
 app.get('/',(req,res)=> res.send("Api is working"))
@@ -30,6 +29,8 @@ app.post('/clerk',express.json(), clerkWebhooks)
 app.use('/api/educator',express.json(),educatorRouter)
 app.use('/api/course', express.json(), courseRouter)
 app.use('/api/user',express.json(),userRouter)
+app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks)
+
 
 //port
 const PORT = process.env.PORT || 5000;
