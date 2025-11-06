@@ -13,11 +13,11 @@ import userRouter from './routes/userRoutes.js';
 const app = express()
 
 // ✅ Stripe webhook must come BEFORE any body parsers or Clerk middleware
-app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks);
+app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks)
 
 // Global middlewares
 app.use(cors())
-app.use(express.json()); // can safely parse normal routes
+app.use(express.json()); //Extra. can safely parse normal routes
 app.use(clerkMiddleware()) // Authenticate all requests and attach user info to req.auth
 
 // Connect DB + Cloudinary
