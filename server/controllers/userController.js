@@ -18,7 +18,7 @@ export const getUserData = async (req,res)=>{
         res.json({success: true, user})
 
     } catch (error) {
-        res.json({sucess: false, message: error.message})
+        res.json({success: false, message: error.message})
     }
 }
 
@@ -29,9 +29,9 @@ export const userEnrolledCourses = async (req, res)=>{
         const userId = req.auth.userId
         const userData = await User.findById(userId).populate('enrolledCourses')
 
-        res.json({sucess: true, enrolledCourses: userData.enrolledCourses})
+        res.json({success: true, enrolledCourses: userData.enrolledCourses})
     } catch (error) {
-        res.json({sucess: false, message: error.message})
+        res.json({success: false, message: error.message})
         
     }
 }
@@ -46,7 +46,7 @@ export const purchaseCourse = async (req,res)=>{
         const courseData = await Course.findById(courseId) 
 
         if(!userData || !courseData){
-            return res.json({sucess: false, message: 'Data Not Found'})
+            return res.json({success: false, message: 'Data Not Found'})
         }
 
         const purchaseData = {
