@@ -1,6 +1,4 @@
-# 🎓 Coursia – Learning Management System
-
-
+#  Coursia – Learning Management System
 A full-stack Learning Management System built using the MERN stack.  
 This platform allows educators to create and manage courses, and students to enroll, purchase, and access learning content online.
 
